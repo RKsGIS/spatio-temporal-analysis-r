@@ -1,0 +1,85 @@
+---
+title: "datacube"
+output: html_document
+date: "2022-12-20"
+---
+
+
+## R libraries
+
+
+
+```{r }
+library(gdalcubes)
+library(raster)
+library(stringr)
+library(rgdal)
+gdalcubes_options(threats=4)
+#gdalcubes_options(parallel=4)
+```
+
+#Data download
+
+```{r}
+download.file("https://uni-muenster.sciebo.de/s/e5yUZmYGX0bo4u9/download",
+              destfile ="Landsat8.zip", mode="wb")
+unzip("Landsat8.zip", exdir = "Landsat8")
+```
+
+#load data
+
+```{r}
+L8 <- list.files("Landsat8/LC082290642019031601T2-SC20190715045938", pattern = ".tif", recursive = TRUE, full.names = TRUE)
+```
+
+#create collection
+## 
+r crashing here
+
+```{r}
+#L8.col <- create_image_collection(L8, format = "L8_SR", out_file = "L8.db")
+
+#alt
+
+#if (!file.exists(file.path(tempdir(), "L8.db"))) {
+    L8_files <- list.files(system.file("L8NY18", package = "gdalcubes"),
+                           ".TIF", recursive = TRUE, full.names = TRUE)
+    create_image_collection(l8, "L8_SR", file.path(tempdir(), "L8.db"), quiet = TRUE) 
+}
+
+```
+
+```{r}
+
+L8 <- lapply(L8, raster)
+
+
+
+L8.col <- stack(L8)
+
+```
+
+#NDVI
+
+```{r}
+calc_ndvi <- function(x) {
+  
+  R <- x[4]
+  NIR <- x[5]
+  # Calculate NDVI
+  (NIR - R) / (NIR + R)
+}
+
+ndvi <- calc(L8.col, calc_ndvi)
+```
+
+#median
+
+```{r}
+time_period <- time(L8.col)
+calculate_median <- function(x) {
+  median(x, na.rm = TRUE)
+}
+
+```
+
