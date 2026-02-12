@@ -69,6 +69,7 @@ spatio-temporal-analysis-r/
 ## Full Project Report
 
 The complete rendered HTML report is available via [GitHub Page](https://rksgis.github.io/spatio-temporal-analysis-r/spatio_temporal_amazon_project.html)
+
 ---
 
 ## Author
