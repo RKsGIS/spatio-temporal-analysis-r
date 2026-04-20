@@ -1,4 +1,4 @@
-# Spatio-Temporal Analysis: Health Facilities in the Amazon 
+# Spatio-Temporal Analysis: Health Facilities in the Amazon Region
 
 A spatial data science project investigating the relationship between urbanization, population density, and the distribution of healthcare infrastructure in the Brazilian Amazon.
 
